@@ -13,7 +13,6 @@
 ├── .gitignore
 ├── README.md
 ├── config.js
-├── db.js
 ├── index.js
 ├── package-lock.json
 └── package.json
