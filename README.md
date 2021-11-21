@@ -6,3 +6,4 @@
 - In case some of the packages are lost/not installed, run: `npm i body-parser cors dotenv express firebase twilio nodemon`
 ### Run Backend
 - To start the backend/running server, run in your terminal: `nodemon index.js`
+
