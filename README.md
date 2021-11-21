@@ -2,11 +2,11 @@
 ## Backend's Structure
 ```
 ├── controllers
-│   ├── userController.js
+│   └── userController.js
 ├── models
-│   ├── user.js
+│   └── user.js
 ├── routes
-│   ├── userRoutes.js
+│   └──  userRoutes.js
 ├── services
 │   ├── generate-code.js
 │   └── send-sms.js
