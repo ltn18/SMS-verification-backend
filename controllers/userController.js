@@ -1,10 +1,5 @@
 "use strict";
 
-// TODO:
-// last thing to do is to show on frontend 2 things:
-// 1. whether the record is saved successfully
-// 2. whether the phone has been verified
-
 // services
 const generateAccessCode = require("../services/generate-code");
 const sendSMS = require("../services/send-sms");
@@ -13,16 +8,19 @@ const sendSMS = require("../services/send-sms");
 const firebase = require("../db");
 const firestore = firebase.firestore();
 
+// add user to firestore DB
+// get data posted from frontend
+// update the accessCode of the posted data
+// to the new generated code
+// add user to the firestore DB
+// send SMS to user's phone number
 const addUser = async (req, res, next) => {
   try {
     const data = req.body;
     const phoneNumber = data.phoneNumber;
     data.accessCode = generateAccessCode();
 
-    const users = await firestore
-      .collection("users")
-      .where("phoneNumber", "==", phoneNumber)
-      .get();
+    const users = await firestore.collection("users").get();
 
     if (users.empty) {
       await firestore.collection("users").doc().set(data);
@@ -36,12 +34,15 @@ const addUser = async (req, res, next) => {
   }
 };
 
+// validate access code
+// find matching phone number user in firestore
+// and check if the accessCode matches
+// if verified, set accessCode to ""
 const validateAccessCode = async (req, res, next) => {
   try {
     const phoneNumber = req.params.id;
     const data = req.body;
 
-    // this will get user of similar phone
     const usersRef = await firestore.collection("users");
     const users = await usersRef.where("phoneNumber", "==", phoneNumber).get();
 
@@ -56,6 +57,11 @@ const validateAccessCode = async (req, res, next) => {
   }
 };
 
+// create a new access code
+// find matching phone number user in firestore DB
+// generate a new code
+// update the user's accessCode to the new code
+// send SMS again to user
 const createNewAccessCode = async (req, res, next) => {
   try {
     const phoneNumber = req.params.id;
@@ -69,7 +75,7 @@ const createNewAccessCode = async (req, res, next) => {
         doc.ref.update({ accessCode: code });
       }
     });
-    
+
     next(sendSMS(phoneNumber, code));
   } catch (error) {
     res.status(400).send(error.message);
