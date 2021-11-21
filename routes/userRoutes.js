@@ -1,9 +1,11 @@
 const express = require("express");
-const { addUser } = require("../controllers/userController");
+const { addUser, validateAccessCode, createNewAccessCode } = require("../controllers/userController");
 
 const router = express.Router();
 
-router.post("/student", addStudent);
+router.post("/user", addUser);
+router.post("/user/:id", validateAccessCode);
+router.post("/user/:id/newCode", createNewAccessCode);
 
 module.exports = {
   routes: router,
