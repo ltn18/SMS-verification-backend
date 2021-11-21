@@ -5,7 +5,7 @@ const generateAccessCode = require("../services/generate-code");
 const sendSMS = require("../services/send-sms");
 
 // firebase
-const firebase = require("../db");
+const firebase = require("../firebase");
 const firestore = firebase.firestore();
 
 // add user to firestore DB
